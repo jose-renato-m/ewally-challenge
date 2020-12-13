@@ -8,16 +8,15 @@ import validateVerificationCode from '../helpers/validateVerificationCode';
 import printValue from '../helpers/printValue';
 
 export default class BilletsValidationController {
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  static verify(request: Request, response: Response) {
-    const { numeric_code } = request.body;
+  static verify(request: Request, response: Response): Response<number> {
+    const { numeric_code } = request.params;
 
     // case user has entered with a row which contains dots or gaps
     const numeric_codeParsed: Array<string> = numeric_code
       .split('')
       .filter((number: string) => !['.', ' '].includes(number));
 
-    if (!isNumeric(numeric_code.join('')))
+    if (!isNumeric(numeric_codeParsed.join('')))
       return response.status(403).json({ err: 'Campo inválido' });
 
     const size: number = numeric_codeParsed.length;

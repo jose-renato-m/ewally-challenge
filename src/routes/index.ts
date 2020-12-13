@@ -3,6 +3,6 @@ import BilletsValidationController from '../controllers/BilletsValidationControl
 
 const routes = Router();
 
-routes.post('/boleto', BilletsValidationController);
+routes.get('/:numeric_code', BilletsValidationController.verify);
 
 export default routes;
